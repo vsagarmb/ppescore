@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 /* POST Data */
 router.post("/data", function(request, response) {
   console.log(request.body);  
-  data = request.get('Hello');
+  response.send(request.body);
 });
 
 router.get('/view', function(req, res, next) {
