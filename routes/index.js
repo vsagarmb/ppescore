@@ -3,6 +3,7 @@ var router = express.Router();
 var myParser = require("body-parser");
 var app = express();
 var data;
+var db = require('../data/userdb');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -10,8 +11,9 @@ router.get('/', function(req, res, next) {
 });
 
 /* POST Data */
-router.post("/data", function(request, response) {
+router.post("/data", function(request, response, next) {
   console.log(request.body);  
+  db.createUsers(err, rowCount, row);
   response.send(request.body);
 });
 
