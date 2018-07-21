@@ -13,13 +13,17 @@ router.get('/', function(req, res, next) {
 /* POST Data */
 router.post("/data", function(request, response, next) {
   console.log(request.body);  
-  db.createUsers(err, rowCount, row);
-  response.send(request.body);
+  
+  db.createUsers(function(err, rowCount) {
+    if(err) return next(err);    
+    response.send(`Added ${rowCount} records new`);  
+    console.log(`Added ${rowCount} records inside`);
+  });
 });
 
 router.get('/view', function(req, res, next) {
   res.render('view', { title: 'Data Received', name: 'Sagar'});
- //console.log("view method");
+  console.log("view method");
 });
 
 module.exports = router;
