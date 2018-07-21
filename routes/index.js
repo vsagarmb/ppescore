@@ -14,8 +14,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* POST Data */
-router.post("/data", function(request, response, next) {
-  console.log("TEST:  " + request.body.OperatorID);  
+router.post("/data", function(request, response, next) {   
   var objs = [request.body.OperatorID, request.body.operatorName, request.body.zoneID, request.body.ppe1Status, request.body.ppe2Status, request.body.ppe3Status, request.body.ppe4Status, request.body.ppe5Status];
   db.createUsers(objs, function(err, rowCount) {
     if(err) return next(err);    

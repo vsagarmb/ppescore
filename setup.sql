@@ -64,3 +64,5 @@ ELSE
 INSERT INTO operator (operatorName, zoneID, ppe1Status, ppe2Status, ppe3Status, ppe4Status, ppe5Status) VALUES ('Sagar2', 1, 1, 1, 1, 1, 1)
 
 SELECT * FROM operator
+
+SELECT * FROM operator where id=1
