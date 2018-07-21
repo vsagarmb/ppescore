@@ -4,6 +4,9 @@ var myParser = require("body-parser");
 var app = express();
 var data;
 var db = require('../data/userdb');
+var bodyParser = require('body-parser');
+router.use(bodyParser.json()); // support json encoded bodies
+router.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -12,14 +15,14 @@ router.get('/', function(req, res, next) {
 
 /* POST Data */
 router.post("/data", function(request, response, next) {
-  console.log(request.body);  
-  
-  db.createUsers(function(err, rowCount) {
+  console.log("TEST:  " + request.body.OperatorID);  
+  var objs = [request.body.OperatorID, request.body.operatorName, request.body.zoneID, request.body.ppe1Status, request.body.ppe2Status, request.body.ppe3Status, request.body.ppe4Status, request.body.ppe5Status];
+  db.createUsers(objs, function(err, rowCount) {
     if(err) return next(err);    
     response.send(`Added ${rowCount} records new`);  
     console.log(`Added ${rowCount} records inside`);
   });
-});
+}); 
 
 router.get('/view', function(req, res, next) {
   res.render('view', { title: 'Data Received', name: 'Sagar'});

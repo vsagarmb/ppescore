@@ -59,7 +59,8 @@ INSERT INTO operator (operatorName, zoneID, ppe1Status, ppe2Status, ppe3Status, 
 INSERT INTO operator (operatorName, zoneID, ppe1Status, ppe2Status, ppe3Status, ppe4Status, ppe5Status) VALUES ('Hari', 2, 1, 1, 1, 1, 1)
 
 IF EXISTS (SELECT 1 FROM operator where id='1')
-UPDATE operator SET operatorName='VidyaSagar', zoneID=2 where id=1
+UPDATE operator SET operatorName='VidyaSagar', zoneID=2, ppe1Status=1, ppe2Status=1, ppe3Status=1, ppe4Status=1, ppe5Status=1 where id=1
 ELSE
 INSERT INTO operator (operatorName, zoneID, ppe1Status, ppe2Status, ppe3Status, ppe4Status, ppe5Status) VALUES ('Sagar2', 1, 1, 1, 1, 1, 1)
 
+SELECT * FROM operator

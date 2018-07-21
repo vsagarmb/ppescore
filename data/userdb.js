@@ -15,7 +15,7 @@ var config = {
     }
 }
 
-var createUsers = function(callback) {    
+var createUsers = function(objs, callback) {    
     var connection = new Connection(config);    
     connection.on('connect', function(err) {
         if(err) {
@@ -35,14 +35,14 @@ var createUsers = function(callback) {
                 }
             );
 
-            request.addParameter('idValue', TYPES.Int, 1);
-            request.addParameter('opName', TYPES.NVarChar, 'Ananya');
-            request.addParameter('zID', TYPES.Int, 1);
-            request.addParameter('ppe1Stat', TYPES.Int, 1);
-            request.addParameter('ppe2Stat', TYPES.Int, 0);
-            request.addParameter('ppe3Stat', TYPES.Int, 0);
-            request.addParameter('ppe4Stat', TYPES.Int, 1);
-            request.addParameter('ppe5Stat', TYPES.Int, 1);
+            request.addParameter('idValue', TYPES.Int, objs[0]);
+            request.addParameter('opName', TYPES.NVarChar, objs[1]);
+            request.addParameter('zID', TYPES.Int, objs[2]);
+            request.addParameter('ppe1Stat', TYPES.Int, objs[3]);
+            request.addParameter('ppe2Stat', TYPES.Int, objs[4]);
+            request.addParameter('ppe3Stat', TYPES.Int, objs[5]);
+            request.addParameter('ppe4Stat', TYPES.Int, objs[6]);
+            request.addParameter('ppe5Stat', TYPES.Int, objs[7]);
             
             connection.execSql(request);
         }
