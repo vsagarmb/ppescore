@@ -170,15 +170,21 @@ var aSyncCalls = function() {
                     compStatus = checkCompliance(zoneObjs, rows[i]);
                     console.log("Compliance Status: " + compStatus);
 
-                    // Update Operator Status                    
-                    updateOperatorStatus([i+1, compStatus, conStatus], function(err, rowCount){
-                        if(rowCount > 0)
-                            console.log("Updated " + rowCount + " operator");
-                        else
-                            console.log("Not Updated");
+                    // Update Operator Status
+                    if ((rows[i].connectionStatus.value != conStatus) || (rows[i].complianceStatus.value != compStatus)) {
+                        updateOperatorStatus([i+1, compStatus, conStatus], function(err, rowCount){
+                            if(rowCount > 0)
+                                console.log("Updated " + rowCount + " operator");
+                            else
+                                console.log("Not Updated");
 
+                            console.log("");
+                        });
+                    }
+                    else {
+                        console.log("Data upto date");
                         console.log("");
-                    });
+                    }
                 }                
             });
         });
