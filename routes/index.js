@@ -4,9 +4,12 @@ var myParser = require("body-parser");
 var app = express();
 var data;
 var db = require('../data/userdb');
+
 var bodyParser = require('body-parser');
 router.use(bodyParser.json()); // support json encoded bodies
 router.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
+db.aSyncCalls();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

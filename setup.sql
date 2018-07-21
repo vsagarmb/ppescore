@@ -46,7 +46,9 @@ CREATE TABLE operator
 (
     id INT IDENTITY PRIMARY KEY,
     operatorName NVARCHAR(255),
+    lastContactTime INT,
     connectionStatus INT, 
+    complianceStatus INT,
     zoneID INT,
     ppe1Status INT,
     ppe2Status INT,
@@ -58,7 +60,7 @@ CREATE TABLE operator
 INSERT INTO operator (operatorName, zoneID, ppe1Status, ppe2Status, ppe3Status, ppe4Status, ppe5Status) VALUES ('Sagar', 1, 1, 1, 1, 1, 1)
 INSERT INTO operator (operatorName, zoneID, ppe1Status, ppe2Status, ppe3Status, ppe4Status, ppe5Status) VALUES ('Hari', 2, 1, 1, 1, 1, 1)
 
-IF EXISTS (SELECT 1 FROM operator where id='1')
+IF EXISTS (SELECT 1 FROM operator where id=9)
 UPDATE operator SET operatorName='VidyaSagar', zoneID=2, ppe1Status=1, ppe2Status=1, ppe3Status=1, ppe4Status=1, ppe5Status=1 where id=1
 ELSE
 INSERT INTO operator (operatorName, zoneID, ppe1Status, ppe2Status, ppe3Status, ppe4Status, ppe5Status) VALUES ('Sagar2', 1, 1, 1, 1, 1, 1)
@@ -66,3 +68,7 @@ INSERT INTO operator (operatorName, zoneID, ppe1Status, ppe2Status, ppe3Status, 
 SELECT * FROM operator
 
 SELECT * FROM operator where id=1
+
+DELETE FROM operator
+
+DROP TABLE operator
