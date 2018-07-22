@@ -144,7 +144,7 @@ var queryZones = function(callback) {
     var connection = new Connection(config);
 
     connection.on('error', function(err) {
-        console.log("Message Logged queryZones");
+        console.log("Message Logged queryZones ");
     });
     
     connection.on('connect', function(err) {
