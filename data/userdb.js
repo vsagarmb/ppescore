@@ -39,7 +39,8 @@ var createOperators = function(objs, callback) {
                 `,
                 function(err, rowCount) {
                     if (err) console.log(err);                    
-                    callback(err, rowCount);
+                    callback(err, rowCount);   
+                    connection.close();                   
                 }
             );
 
@@ -104,7 +105,8 @@ var updateOperatorStatus = function(objs, callback) {
                 `,
                 function(err, rowCount) {
                     if (err) console.log(err);                    
-                    callback(err, rowCount);
+                    callback(err, rowCount);    
+                    connection.close();                  
                 }
             );
 
@@ -119,7 +121,7 @@ var updateOperatorStatus = function(objs, callback) {
 
 var queryOperators = function(callback) {
     var connection = new Connection(config);
-
+    
     connection.on('error', function(err) {
         console.log("Message Logged queryOperators");
     });
@@ -132,12 +134,13 @@ var queryOperators = function(callback) {
             var request = new Request(               
                 "select * from operator",                
                 function(err, rowCount, rows) {
-                    callback(err, rowCount, rows);
+                    callback(err, rowCount, rows);    
+                    connection.close();                  
                 }
             );            
             connection.execSql(request);            
         }
-    });    
+    });        
 };
 
 var queryZones = function(callback) {
@@ -145,7 +148,7 @@ var queryZones = function(callback) {
 
     connection.on('error', function(err) {
         console.log("Message Logged queryZones");
-    });
+    });    
     
     connection.on('connect', function(err) {
         if(err) {
@@ -155,12 +158,13 @@ var queryZones = function(callback) {
             var request = new Request(               
                 "select * from zones",                
                 function(err, rowCount, rows) {
-                    callback(err, rowCount, rows);
+                    callback(err, rowCount, rows);                     
+                    connection.close();                 
                 }
             );            
-            connection.execSql(request);            
+            connection.execSql(request);                         
         }
-    });    
+    });      
 };
 
 
@@ -173,8 +177,8 @@ var aSyncCalls = function() {
         // First Query the Zone Info
         queryZones(function(err, rowCount, rows) {   
             if(err) return console.log(err);
-            zoneObjs = rows;            
-
+            zoneObjs = rows;           
+            
             // Once you get the callback from the Zone info query, query the operator info
             queryOperators(function(err,rowCount, rows) {  
 
