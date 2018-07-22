@@ -13,7 +13,12 @@ db.aSyncCalls();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'PPE-Score' });
+  db.queryOperators(function(err,rowCount, rows) {                      
+    for (var i = 0; i < rowCount; i++) {                
+        console.log("Operator " + rows[i].id.value + " Name: " + rows[i].operatorName.value);
+    }
+    res.render('index', { title: 'PPE-Score' });
+  });  
 });
 
 /* POST Data */
