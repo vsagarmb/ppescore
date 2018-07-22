@@ -13,13 +13,14 @@ db.aSyncCalls();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  db.queryOperators(function(err,rowCount, rows) {   
+  
+  db.queryZones(function(err,zoneCount, zoneObjs) {   
     if(err) return console.log(err);
-    for (var i = 0; i < rowCount; i++) {                
-        console.log("Operator " + rows[i].id.value + " Name: " + rows[i].operatorName.value);
-    }
-    res.render('index', { title: 'PPE Tracker' });
-  });  
+    db.queryOperators(function(err, opCount, opObjs) {
+      if(err) return console.log(err);
+      res.render('index', { opObjs: opObjs, opCount: opCount, zoneCount: zoneCount, zoneObjs: zoneObjs });
+    });    
+  });   
 });
 
 /* POST Data */

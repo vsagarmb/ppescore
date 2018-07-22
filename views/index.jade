@@ -1,5 +1,18 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title} HACKATHON!
+  h1= "PPE Tracker"
+  p Operators
+
+  table
+    thead
+      tr
+        th Name
+        th Connection Status
+        th Compliance Status        
+    tbody
+      - each item in opObjs
+        tr
+          td= item.operatorName.value
+          td= item.connectionStatus.value
+          td= item.complianceStatus.value
