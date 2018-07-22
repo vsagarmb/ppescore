@@ -2,17 +2,24 @@ extends layout
 
 block content
   h1= "PPE Tracker"
-  p Operators
-
-  table
+  
+  table(border=1, cellpadding=10)
     thead
       tr
-        th Name
+        th Operator Name
         th Connection Status
-        th Compliance Status        
-    tbody
+        th Compliance Status     
+        th Zone Name
+    tbody(align='center')
       - each item in opObjs
         tr
           td= item.operatorName.value
-          td= item.connectionStatus.value
-          td= item.complianceStatus.value
+          if item.connectionStatus.value != 1
+            td(bgcolor="#FF0000") NOT OK
+          else
+            td(bgcolor="#00FF00") OK
+          if item.complianceStatus.value != 1
+            td(bgcolor="#FF0000") NOT OK
+          else
+            td(bgcolor="#00FF00") OK
+          td= zoneObjs[item.zoneID.value-1].zoneName.value
