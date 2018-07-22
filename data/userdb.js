@@ -18,8 +18,13 @@ var config = {
     }
 }
 
-var createUsers = function(objs, callback) {    
+var createOperators = function(objs, callback) {    
     var connection = new Connection(config);    
+
+    connection.on('error', function(err) {
+        console.log("Message Logged createOperators");
+    });
+
     connection.on('connect', function(err) {
         if(err) {
             callback(err);
@@ -83,6 +88,11 @@ var checkCompliance = function(zones, opObj) {
 
 var updateOperatorStatus = function(objs, callback) {    
     var connection = new Connection(config);    
+
+    connection.on('error', function(err) {
+        console.log("Message Logged updateOperatorStatus");
+    });
+
     connection.on('connect', function(err) {
         if(err) {
             callback(err);
@@ -109,6 +119,11 @@ var updateOperatorStatus = function(objs, callback) {
 
 var queryOperators = function(callback) {
     var connection = new Connection(config);
+
+    connection.on('error', function(err) {
+        console.log("Message Logged queryOperators");
+    });
+
     connection.on('connect', function(err) {
         if(err) {
             callback(err);
@@ -127,6 +142,11 @@ var queryOperators = function(callback) {
 
 var queryZones = function(callback) {
     var connection = new Connection(config);
+
+    connection.on('error', function(err) {
+        console.log("Message Logged queryZones");
+    });
+    
     connection.on('connect', function(err) {
         if(err) {
             callback(err);
@@ -148,16 +168,17 @@ var aSyncCalls = function() {
 
     var statusCheck = aSyncPolling(function(end) {
         
-        var zoneObjs;
-        var zoneObjsLen;
+        var zoneObjs;        
 
         // First Query the Zone Info
-        queryZones(function(err, rowCount, rows) {                        
+        queryZones(function(err, rowCount, rows) {   
+            if(err) return console.log(err);
             zoneObjs = rows;            
 
             // Once you get the callback from the Zone info query, query the operator info
-            queryOperators(function(err,rowCount, rows) {      
-                
+            queryOperators(function(err,rowCount, rows) {  
+
+                if(err) return console.log(err);
                 for (var i = 0; i < rowCount; i++) {                
 
                     //console.log("Operator " + rows[i].id.value + " Name: " + rows[i].operatorName.value);
@@ -173,6 +194,7 @@ var aSyncCalls = function() {
                     // Update Operator Status
                     if ((rows[i].connectionStatus.value != conStatus) || (rows[i].complianceStatus.value != compStatus)) {
                         updateOperatorStatus([i+1, compStatus, conStatus], function(err, rowCount){
+                            if(err) return console.log(err);
                     /*        if(rowCount > 0)
                                 console.log("Updated " + rowCount + " operator");
                             else
@@ -197,7 +219,7 @@ var aSyncCalls = function() {
 }
 
 module.exports = {
-    createUsers: createUsers,
+    createOperators: createOperators,
     queryOperators: queryOperators,
     aSyncCalls: aSyncCalls    
 };

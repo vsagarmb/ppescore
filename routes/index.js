@@ -13,19 +13,20 @@ db.aSyncCalls();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  db.queryOperators(function(err,rowCount, rows) {                      
+  db.queryOperators(function(err,rowCount, rows) {   
+    if(err) return console.log(err);
     for (var i = 0; i < rowCount; i++) {                
         console.log("Operator " + rows[i].id.value + " Name: " + rows[i].operatorName.value);
     }
-    res.render('index', { title: 'PPE-Score' });
+    res.render('index', { title: 'PPE Tracker' });
   });  
 });
 
 /* POST Data */
 router.post("/data", function(request, response, next) {   
   var objs = [request.body.OperatorID, request.body.operatorName, request.body.zoneID, request.body.ppe1Status, request.body.ppe2Status, request.body.ppe3Status, request.body.ppe4Status, request.body.ppe5Status];
-  db.createUsers(objs, function(err, rowCount) {
-    if(err) return next(err);    
+  db.createOperators(objs, function(err, rowCount) {
+    if(err) return console.log(err);
     response.send(`Added ${rowCount} records new`);  
     console.log(`Added ${rowCount} records inside`);
   });
