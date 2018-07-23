@@ -70,7 +70,7 @@ var checkConnection = function(opObj) {
 
     var currentTime = Math.round((new Date().getTime()/1000));
 
-    if ((currentTime - opObj.lastContactTime.value) > 20)
+    if ((currentTime - opObj.lastContactTime.value) > 60)
         return 0;
     else
         return 1;
